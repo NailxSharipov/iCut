@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		540FB92627EC87F70012B27E /* CVPixelBuffer+Clamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540FB92527EC87F70012B27E /* CVPixelBuffer+Clamp.swift */; };
 		54958CC027EC732E003D6D23 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54958CBF27EC732E003D6D23 /* AppDelegate.swift */; };
 		54958CC227EC732E003D6D23 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54958CC127EC732E003D6D23 /* SceneDelegate.swift */; };
 		54958CC427EC732E003D6D23 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54958CC327EC732E003D6D23 /* MainViewController.swift */; };
@@ -14,9 +15,11 @@
 		54958CC927EC732F003D6D23 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54958CC827EC732F003D6D23 /* Assets.xcassets */; };
 		54958CCC27EC732F003D6D23 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 54958CCA27EC732F003D6D23 /* LaunchScreen.storyboard */; };
 		54958CD427EC7426003D6D23 /* CaptureProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54958CD327EC7426003D6D23 /* CaptureProcessor.swift */; };
+		54C6969A27ECE69A007D9823 /* ShotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C6969927ECE69A007D9823 /* ShotViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		540FB92527EC87F70012B27E /* CVPixelBuffer+Clamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Clamp.swift"; sourceTree = "<group>"; };
 		54958CBC27EC732E003D6D23 /* iCut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iCut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54958CBF27EC732E003D6D23 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		54958CC127EC732E003D6D23 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -26,6 +29,7 @@
 		54958CCB27EC732F003D6D23 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		54958CCD27EC732F003D6D23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		54958CD327EC7426003D6D23 /* CaptureProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureProcessor.swift; sourceTree = "<group>"; };
+		54C6969927ECE69A007D9823 /* ShotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +43,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		540FB92427EC87E50012B27E /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				540FB92527EC87F70012B27E /* CVPixelBuffer+Clamp.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		54958CB327EC732E003D6D23 = {
 			isa = PBXGroup;
 			children = (
@@ -58,6 +70,7 @@
 		54958CBE27EC732E003D6D23 /* iCut */ = {
 			isa = PBXGroup;
 			children = (
+				540FB92427EC87E50012B27E /* Extension */,
 				54958CBF27EC732E003D6D23 /* AppDelegate.swift */,
 				54958CC127EC732E003D6D23 /* SceneDelegate.swift */,
 				54958CC327EC732E003D6D23 /* MainViewController.swift */,
@@ -66,6 +79,7 @@
 				54958CCA27EC732F003D6D23 /* LaunchScreen.storyboard */,
 				54958CCD27EC732F003D6D23 /* Info.plist */,
 				54958CD327EC7426003D6D23 /* CaptureProcessor.swift */,
+				54C6969927ECE69A007D9823 /* ShotViewController.swift */,
 			);
 			path = iCut;
 			sourceTree = "<group>";
@@ -141,6 +155,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54C6969A27ECE69A007D9823 /* ShotViewController.swift in Sources */,
+				540FB92627EC87F70012B27E /* CVPixelBuffer+Clamp.swift in Sources */,
 				54958CC427EC732E003D6D23 /* MainViewController.swift in Sources */,
 				54958CD427EC7426003D6D23 /* CaptureProcessor.swift in Sources */,
 				54958CC027EC732E003D6D23 /* AppDelegate.swift in Sources */,
@@ -299,8 +315,10 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -327,8 +345,10 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

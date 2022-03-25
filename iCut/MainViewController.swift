@@ -41,6 +41,11 @@ final class MainViewController: UIViewController {
         
         shotButton.addTarget(self, action: #selector(takePhoto), for: .touchUpInside)
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        captureProcessor?.start()
+    }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -85,19 +90,11 @@ final class MainViewController: UIViewController {
         self.captureProcessor = CaptureProcessor()
         guard let processor = self.captureProcessor else { return }
         
-        processor.onDidCapturePhoto = { [weak self] photo in
-            guard let depthData = photo.depthData else {
+        processor.onDidCapturePhoto = { [weak self] image in
+            guard let self = self, let image = image else {
                 return
             }
-            
-            let pixelMap = depthData.converting(toDepthDataType: kCVPixelFormatType_DepthFloat32)
-            let depthDataMap = pixelMap.depthDataMap //AVDepthData -> CVPixelBuffer
-
-            let ciImage = CIImage(cvPixelBuffer: depthDataMap)
-            let image = UIImage(ciImage: ciImage)
-            
-            self?.resultView.image = image
-            self?.resultView.contentMode = .scaleAspectFit
+            self.navigationController?.pushViewController(ShotViewController(image: image), animated: true)
         }
         
         processor.onDidUpdateDepthePhoto = { [weak self] image in

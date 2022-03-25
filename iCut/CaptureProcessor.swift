@@ -20,7 +20,7 @@ final class CaptureProcessor {
     private let dataOutputQueue = DispatchQueue(label: "CaptureProcessorWorkQueue")
     
     
-    var onDidCapturePhoto: ((AVCapturePhoto) -> ())? {
+    var onDidCapturePhoto: ((UIImage?) -> ())? {
         get {
             photoSolver.onDidCapturePhoto
         }
@@ -30,7 +30,7 @@ final class CaptureProcessor {
         }
     }
     
-    var onDidUpdateDepthePhoto: ((UIImage) -> ())? {
+    var onDidUpdateDepthePhoto: ((UIImage?) -> ())? {
         get {
             depthSolver.onDidUpdateDepthePhoto
         }
@@ -85,10 +85,12 @@ final class CaptureProcessor {
     }
     
     func start() {
+        guard !session.isRunning else { return }
         session.startRunning()
     }
     
     func stop() {
+        guard session.isRunning else { return }
         session.stopRunning()
     }
     
@@ -104,7 +106,7 @@ final class CaptureProcessor {
 
 final class CaptureProcessorPhotoSolver: NSObject, AVCapturePhotoCaptureDelegate {
     
-    fileprivate var onDidCapturePhoto: ((AVCapturePhoto) -> ())?
+    fileprivate var onDidCapturePhoto: ((UIImage?) -> ())?
     
     
     func photoOutput(_ output: AVCapturePhotoOutput, willBeginCaptureFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
@@ -125,7 +127,26 @@ final class CaptureProcessorPhotoSolver: NSObject, AVCapturePhotoCaptureDelegate
             print(err.localizedDescription)
             return
         }
-        onDidCapturePhoto?(photo)
+        
+        let convertedDepth: AVDepthData
+        let depthDataType = kCVPixelFormatType_DisparityFloat32
+        guard let depthData = photo.depthData else { return }
+        
+        if depthData.depthDataType != depthDataType {
+            convertedDepth = depthData.converting(toDepthDataType: depthDataType)
+        } else {
+            convertedDepth = depthData
+        }
+
+        let pixelBuffer = convertedDepth.depthDataMap
+        let image = pixelBuffer.image()
+//        pixelBuffer.normolize()
+//        let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
+//        let image = UIImage(ciImage: ciImage)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.onDidCapturePhoto?(image)
+        }
     }
 
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishCaptureFor resolvedSettings: AVCaptureResolvedPhotoSettings, error: Error?) {
@@ -140,7 +161,7 @@ final class CaptureProcessorPhotoSolver: NSObject, AVCapturePhotoCaptureDelegate
 
 final class CaptureProcessorDepthSolver: NSObject, AVCaptureDepthDataOutputDelegate {
     
-    fileprivate var onDidUpdateDepthePhoto: ((UIImage) -> ())?
+    fileprivate var onDidUpdateDepthePhoto: ((UIImage?) -> ())?
     
     func depthDataOutput(_ output: AVCaptureDepthDataOutput, didOutput depthData: AVDepthData, timestamp: CMTime, connection: AVCaptureConnection) {
         let convertedDepth: AVDepthData
@@ -152,9 +173,10 @@ final class CaptureProcessorDepthSolver: NSObject, AVCaptureDepthDataOutputDeleg
         }
 
         let pixelBuffer = convertedDepth.depthDataMap
-//        pixelBuffer.clamp()
-        let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
-        let image = UIImage(ciImage: ciImage)
+        let image = pixelBuffer.image()
+//        pixelBuffer.normolize()
+//        let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
+//        let image = UIImage(ciImage: ciImage)
         
         DispatchQueue.main.async { [weak self] in
             self?.onDidUpdateDepthePhoto?(image)
